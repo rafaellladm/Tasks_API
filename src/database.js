@@ -25,6 +25,12 @@ export class Database {
     return data
   }
 
+  selectId(table, id) {
+    const data = this.#database[table].find(data => data.id ===id)
+
+    return data
+  }
+
   insert(table, data) {
     if (Array.isArray(this.#database[table])) {
       this.#database[table].push(data)
@@ -46,6 +52,16 @@ export class Database {
       this.#persist()
     }
   }
+
+  // complete(table, id, data) {
+  //   const rowIndex = this.#database[table].findIndex(row => row.id === id)
+
+  //   if (rowIndex > -1) {
+  //     const row = this.#database[table][rowIndex]
+  //     this.#database[table][rowIndex] = {id, ...row, ...data}
+  //     this.#persist()
+  //   }
+  // }
 
   delete(table, id) {
     const rowIndex = this.#database[table].findIndex(row => row.id === id)

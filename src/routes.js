@@ -41,6 +41,14 @@ export const routes = [
       const { id } = req.params
       const { title, description } = req.body
 
+      const task = database.selectId('tasks', id)
+
+      if (!task) {
+        return res.writeHead(404).end(
+          JSON.stringify({message: 'Tarefa não encontrada.'})
+        )
+      }
+
       if (!title || !description) {
         return res.writeHead(400).end(
           JSON.stringify({message: 'Titulo ou descrição são obrigatório.'})
@@ -56,11 +64,32 @@ export const routes = [
       return res.writeHead(204).end()
     }
   },
+  // {
+  //   method: 'PATCH',
+  //   path: buildRoutePath('tasks/:id/complete'),
+  //   handler: (req, res) => {
+  //     const { id } = req.params
+
+  //     database.complete('tasks', id, {
+  //       completed_at: new Date()
+  //     })
+
+  //     return res.writeHead(204).end()
+  //   }
+  // },
   {
     method: 'DELETE',
     path: buildRoutePath('/tasks/:id'),
     handler: (req, res) => {
       const { id } = req.params
+
+      const task = database.selectId('tasks', id)
+
+      if (!task) {
+        return res.writeHead(404).end(
+          JSON.stringify({message: 'Tarefa não encontrada.'})
+        )
+      }
 
       database.delete('tasks', id)
 
