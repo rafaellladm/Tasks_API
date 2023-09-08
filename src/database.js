@@ -53,15 +53,15 @@ export class Database {
     }
   }
 
-  // complete(table, id, data) {
-  //   const rowIndex = this.#database[table].findIndex(row => row.id === id)
+  complete(table, id, data) {
+    const rowIndex = this.#database[table].findIndex(row => row.id === id)
 
-  //   if (rowIndex > -1) {
-  //     const row = this.#database[table][rowIndex]
-  //     this.#database[table][rowIndex] = {id, ...row, ...data}
-  //     this.#persist()
-  //   }
-  // }
+    if (rowIndex > -1) {
+      const row = this.#database[table][rowIndex]
+      this.#database[table][rowIndex] = {id, ...row, ...data}
+      this.#persist()
+    }
+  }
 
   delete(table, id) {
     const rowIndex = this.#database[table].findIndex(row => row.id === id)

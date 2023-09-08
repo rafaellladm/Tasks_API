@@ -64,19 +64,27 @@ export const routes = [
       return res.writeHead(204).end()
     }
   },
-  // {
-  //   method: 'PATCH',
-  //   path: buildRoutePath('tasks/:id/complete'),
-  //   handler: (req, res) => {
-  //     const { id } = req.params
+  {
+    method: 'PATCH',
+    path: buildRoutePath('/tasks/:id/complete'),
+    handler: (req, res) => {
+      const { id } = req.params
 
-  //     database.complete('tasks', id, {
-  //       completed_at: new Date()
-  //     })
+      const task = database.selectId('tasks', id)
 
-  //     return res.writeHead(204).end()
-  //   }
-  // },
+      if (!task) {
+        return res.writeHead(404).end(
+          JSON.stringify({message: 'Tarefa não encontrada.'})
+        )
+      }
+
+      database.complete('tasks', id, {
+        completed_at: new Date()
+      })
+
+      return res.writeHead(204).end()
+    }
+  },
   {
     method: 'DELETE',
     path: buildRoutePath('/tasks/:id'),
