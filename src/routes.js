@@ -54,7 +54,7 @@ export const routes = [
         )
       }
 
-      if (!title || !description) {
+      if (!title && !description) {
         return res.writeHead(400).end(
           JSON.stringify({message: 'Titulo ou descrição são obrigatório.'})
         )
